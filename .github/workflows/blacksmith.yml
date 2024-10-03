@@ -4,6 +4,19 @@ name: Blacksmith
 
 on:
   workflow_dispatch:
+    inputs:
+      runner_type:
+        description: "Select the runner type"
+        required: true
+        default: ubuntu-latest
+        type: choice
+        options:
+          - ubuntu-latest
+          - blacksmith-2vcpu-ubuntu-2204
+          - blacksmith-4vcpu-ubuntu-2204
+          - blacksmith-8vcpu-ubuntu-2204
+          - blacksmith-16vcpu-ubuntu-2204
+          - blacksmith-32vcpu-ubuntu-2204
 
 permissions:
   id-token: write
@@ -12,23 +25,10 @@ permissions:
 
 jobs:
   loop:
-    runs-on: ubuntu-latest
-    # runs-on: blacksmith-2vcpu-ubuntu-2204
-    # runs-on: blacksmith-4vcpu-ubuntu-2204
-    # runs-on: blacksmith-8vcpu-ubuntu-2204
-    # runs-on: blacksmith-16vcpu-ubuntu-2204
-    # runs-on: blacksmith-32vcpu-ubuntu-2204
+    runs-on: ${{ inputs.runner_type }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Measure Loop Execution Time
-        run: |
-          start_time=$(date +%s)
-          for ((i=0; i<10000000; i++))
-          do
-            a=$((i * i))
-          done
-          end_time=$(date +%s)
-          execution_time=$((end_time - start_time))
-          echo "Execution time: $execution_time seconds"
+      - name: Run Loop Performance Test Action
+        uses: ./github/actions/loop

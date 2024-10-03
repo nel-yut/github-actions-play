@@ -1,0 +1,5 @@
+name: "Loop Performance Test"
+description: "A custom action to run a loop and measure execution time in milliseconds."
+runs:
+  using: "bash"
+  main: "loop.sh"
