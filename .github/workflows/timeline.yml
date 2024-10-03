@@ -1,0 +1,54 @@
+name: Timeline
+
+# https://github.com/Kesin11/actions-timeline
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  wait_job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for 5 seconds
+        run: sleep 5
+
+      - name: Wait for 3 seconds
+        run: sleep 3
+
+  wait_job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for 5 seconds
+        run: sleep 5
+
+      - name: Wait for 3 seconds
+        run: sleep 3
+
+  wait_job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for 2 seconds
+        run: sleep 2
+
+      - name: Wait for 5 seconds
+        run: sleep 5
+
+  actions-timeline:
+    needs: [wait_job1, wait_job2, wait_job3]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: Kesin11/actions-timeline@v2
