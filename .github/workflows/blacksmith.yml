@@ -1,0 +1,30 @@
+name: Blacksmith
+
+# https://moongift.dev/2024/08/16/blacksmith
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    # runs-on: blacksmith-2vcpu-ubuntu-2204
+    # runs-on: blacksmith-4vcpu-ubuntu-2204
+    # runs-on: blacksmith-8vcpu-ubuntu-2204
+    # runs-on: blacksmith-16vcpu-ubuntu-2204
+    # runs-on: blacksmith-32vcpu-ubuntu-2204
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Loop 1000
+        run: |
+          for ((i=0; i<1000; i++))
+          do
+            a=$((i * i))
+          done
