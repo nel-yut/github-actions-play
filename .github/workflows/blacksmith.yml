@@ -22,9 +22,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Loop 1000
+      - name: Measure Loop Execution Time
         run: |
-          for ((i=0; i<1000; i++))
+          start_time=$(date +%s)
+          for ((i=0; i<10000000; i++))
           do
             a=$((i * i))
           done
+          end_time=$(date +%s)
+          execution_time=$((end_time - start_time))
+          echo "Execution time: $execution_time seconds"
