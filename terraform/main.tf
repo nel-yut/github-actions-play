@@ -33,7 +33,7 @@ resource "aws_db_instance" "default" {
   storage_type         = "gp2"
   engine               = "mysql"
   instance_class       = "db.t3.micro"
-  name                 = "exampledb"
+  db_name              = "exampledb"
   username             = "admin"
   password             = "password123" # パスワードは必要に応じて変更
   parameter_group_name = "default.mysql8.0"
