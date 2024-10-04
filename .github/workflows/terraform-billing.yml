@@ -1,6 +1,6 @@
 name: Terraform Billing
 
-# https://github.com/Kesin11/actions-timeline
+# hhttps://github.com/infracost/infracost
 
 on:
   workflow_dispatch:
@@ -37,3 +37,18 @@ jobs:
         - name: Terraform Plan
           working-directory: ./terraform
           run: terraform plan
+
+        - name: Setup Infracost
+          uses: infracost/actions/setup@v1
+          with:
+             api-key: ${{ secrets.INFRACOST_API_KEY }}
+    
+        - name: Generate Infracost JSON
+          working-directory: ./terraform
+          run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
+    
+        - name: Post Infracost comment
+          uses: infracost/actions/comment@v1
+          with:
+             path: /tmp/infracost.json
+             behavior: update 
