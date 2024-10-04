@@ -38,6 +38,14 @@ jobs:
           working-directory: ./terraform
           run: terraform plan
 
+        - name: Terraform plan
+          working-directory: ./terraform
+          run: terraform plan -out tfplan.binary
+          
+        - name: Terraform show
+          working-directory: ./terraform
+          run: terraform show -json tfplan.binary > plan.json
+
         - name: Setup Infracost
           uses: infracost/actions/setup@v1
           with:
