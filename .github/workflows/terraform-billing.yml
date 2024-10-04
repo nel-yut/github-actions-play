@@ -98,7 +98,13 @@ jobs:
         - name: Generate Infracost JSON
           working-directory: ${{ env.WORKING-DIRECTORY }}
           run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
-      
+          
+        - name: Generate Infracost JSON and show cost breakdown
+          working-directory: ${{ env.WORKING-DIRECTORY }}
+          run: |
+            infracost breakdown --path plan.json --format table
+            infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
+
         - name: Post Infracost comment
           uses: infracost/actions/comment@v1
           with:
