@@ -1,44 +1,44 @@
-# name: Blacksmith
+name: Blacksmith
 
-# # https://moongift.dev/2024/08/16/blacksmith
+# https://moongift.dev/2024/08/16/blacksmith
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       runner_type:
-#         description: "Select the runner type"
-#         required: true
-#         default: ubuntu-latest
-#         type: choice
-#         options:
-#           - ubuntu-latest
-#           - windows-latest
-#           - macos-latest
-#           - blacksmith-2vcpu-ubuntu-2204
-#           - blacksmith-4vcpu-ubuntu-2204
-#           - blacksmith-8vcpu-ubuntu-2204
-#           - blacksmith-16vcpu-ubuntu-2204
-#           - blacksmith-32vcpu-ubuntu-2204
+on:
+  workflow_dispatch:
+    inputs:
+      runner_type:
+        description: "Select the runner type"
+        required: true
+        default: ubuntu-latest
+        type: choice
+        options:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+          # - blacksmith-2vcpu-ubuntu-2204
+          # - blacksmith-4vcpu-ubuntu-2204
+          # - blacksmith-8vcpu-ubuntu-2204
+          # - blacksmith-16vcpu-ubuntu-2204
+          # - blacksmith-32vcpu-ubuntu-2204
 
-# permissions:
-#   id-token: write
-#   contents: read
-#   actions: read
+permissions:
+  id-token: write
+  contents: read
+  actions: read
 
-# jobs:
-#   loop:
-#     runs-on: ${{ inputs.runner_type }}
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
+jobs:
+  loop:
+    runs-on: ${{ inputs.runner_type }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-#       - name: Measure Loop Execution Time in Milliseconds
-#         run: |
-#           start_time=$(date +%s%N)
-#           for ((i=0; i<10000000; i++))
-#           do
-#             a=$((i * i))
-#           done
-#           end_time=$(date +%s%N)
-#           execution_time=$(( (end_time - start_time) / 1000000 ))
-#           echo "Execution time: $execution_time milliseconds"
+      - name: Measure Loop Execution Time in Milliseconds
+        run: |
+          start_time=$(date +%s%N)
+          for ((i=0; i<10000000; i++))
+          do
+            a=$((i * i))
+          done
+          end_time=$(date +%s%N)
+          execution_time=$(( (end_time - start_time) / 1000000 ))
+          echo "Execution time: $execution_time milliseconds"
