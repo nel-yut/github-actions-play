@@ -1,0 +1,40 @@
+name: tag動作検証
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "タグを選ぶ"
+        required: true
+
+jobs:
+  show-tags:
+    name: 利用可能なタグ一覧を表示する
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code with all tags
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0  # すべてのタグと履歴が取得
+
+      - name: Fetch and show all tags
+        run: |
+            git fetch --tags
+            echo "利用可能なタグ一覧:"
+            git tag -l
+
+
+  test-job:
+    name: タグのテストをしてみる
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show selected tag
+        run: echo "選ばれたのは ${{ github.event.inputs.tag }} でした"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag }}
+
+      - name: Show output.txt contents
+        run: cat version/output.txt
