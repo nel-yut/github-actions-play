@@ -1,0 +1,33 @@
+name: Blacksmith
+
+# https://moongift.dev/2024/08/16/blacksmith
+
+on:
+  push:
+      paths: [files-test/**, .github/workflows/file-change-test.yml, .github/actions/**]
+      branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: 出力１
+        run: |
+          echo "出力１"
+
+      - name: 出力２
+        if: contains(github.event.head_commit.message, 'files-test/test.text')
+        run: |
+          echo "出力２"
+
+      - name: 出力３
+        run: |
+          echo "出力３" 
