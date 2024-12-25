@@ -21,10 +21,10 @@ jobs:
 
       - name: 出力１
         run: |
-          echo "出力１"
+          echo {{ github.event.head_commit.message}}
 
       - name: 出力２
-        if: contains(github.event.head_commit.message, 'files-test/test.text')
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'files-test/test.text') }}
         run: |
           echo "出力２"
 
