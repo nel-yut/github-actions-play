@@ -1,4 +1,4 @@
-name: Blacksmith
+name: file-test
 
 # https://moongift.dev/2024/08/16/blacksmith
 
@@ -21,7 +21,7 @@ jobs:
 
       - name: 出力１
         run: |
-          echo {{ github.event.head_commit.message}}
+          echo ${{ github.event.head_commit.message }}
 
       - name: 出力２
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'files-test/test.text') }}
